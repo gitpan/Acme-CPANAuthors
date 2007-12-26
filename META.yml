@@ -1,0 +1,25 @@
+--- #YAML:1.0
+name:                Acme-CPANAuthors
+version:             0.01
+abstract:            We are CPAN authors
+license:             perl
+author:              
+    - Kenichi Ishigaki <ishigaki@cpan.org>
+generated_by:        ExtUtils::MakeMaker version 6.42
+distribution_type:   module
+requires:     
+    Carp:                          0
+    CPAN::Config:                  0
+    Exporter:                      0
+    File::Spec:                    0
+    Gravatar::URL:                 0
+    Module::Find:                  0
+    Parse::CPAN::Authors:          0
+    Parse::CPAN::Packages:         2.27
+    Test::More:                    0.47
+    Test::UseAllModules:           0.09
+    URI:                           0
+    Web::Scraper:                  0.21
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3
