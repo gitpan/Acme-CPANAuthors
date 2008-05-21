@@ -41,9 +41,11 @@ sub _cpan_packages_file () {
 sub _cpan_file {
   my ($dir, $basename) = @_;
 
-  _require_cpan_config();
+  _require_myconfig_or_config();
+  croak "You might want to configure CPAN first."
+    unless $CPAN::Config && ref $CPAN::Config eq 'HASH';
 
-  my $source_dir   = $CPAN::Config->{keep_source_where};
+  my $source_dir = $CPAN::Config->{keep_source_where};
   my $file = _catfile( $source_dir, '/', $dir, '/', $basename );
   unless ( -f $file ) {
     $file = _catfile( $source_dir, '/', $basename );
@@ -53,12 +55,21 @@ sub _cpan_file {
   return $file;
 }
 
-sub _require_cpan_config () {
-  if ( $INC{'CPAN/MyConfig.pm'} ) {
-    eval { require CPAN::MyConfig };
-    if ( $@ and $@ !~ m{Can't locate CPAN/MyConfig\.pm} ) {
-      croak "CPAN::MyConfig error: $@";
-    }
+sub _require_myconfig_or_config () { # from CPAN::HandleConfig
+  return if $INC{'CPAN/MyConfig.pm'};
+  local @INC = @INC;
+
+  eval {
+    require File::HomeDir;
+    die unless $File::HomeDir::VERSION >= 0.52;
+  };
+  my $home = $@ ? $ENV{HOME} : File::HomeDir->my_data;
+
+  unshift @INC, File::Spec->catdir($home, '.cpan');
+
+  eval { require CPAN::MyConfig };
+  if ( $@ and $@ !~ m{Can't locate CPAN/MyConfig\.pm} ) {
+    croak "CPAN::MyConfig error: $@";
   }
   unless ( $INC{'CPAN/MyConfig.pm'} ) {
     eval { require CPAN::Config };

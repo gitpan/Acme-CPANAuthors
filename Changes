@@ -1,4 +1,9 @@
 Revision history for Acme-CPANAuthors
 
+0.02 2008/05/22
+  - YAPC::Asia 2008 hackathon release
+  - made Acme::CPANAuthors::(Specific)->authors context sensitive.
+  - better cpan config loading
+
 0.01 2007/12/26
   - ported from former Acme::JapaneseCPANAuthors (not released)

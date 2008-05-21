@@ -9,7 +9,7 @@ sub import {
   my $caller = caller;
   {
     no strict 'refs';
-    *{"$caller\::authors"} = sub { %authors };
+    *{"$caller\::authors"} = sub { wantarray ? %authors : \%authors };
   }
 }
 
@@ -33,9 +33,19 @@ Acme::CPANAuthors::Register
 
   1;
 
+  # then you can get authors list like these.
+  # note that ->authors is context sensitive)
+
+  my %hash    = Acme::CPANAuthors::YourGroup->authors;
+  my $hashref = Acme::CPANAuthors::YourGroup->authors;
+
 =head1 DESCRIPTION
 
 This is used to register Pause IDs and real names of those who belong to your country/local perl mongers group/your company etc.
+
+=head1 SEE ALSO
+
+L<Acme::CPANAuthors>
 
 =head1 AUTHOR
 

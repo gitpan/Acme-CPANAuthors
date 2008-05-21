@@ -5,7 +5,7 @@ use warnings;
 use Carp;
 use Acme::CPANAuthors::Utils qw( cpan_authors cpan_packages );
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub new {
   my ($class, @types) = @_;
@@ -129,6 +129,19 @@ Acme::CPANAuthors - We are CPAN authors
     @distros  = $authors->distributions('ISHIGAKI');
     $url      = $authors->avatar_url('ISHIGAKI');
     $kwalitee = $authors->kwalitee('ISHIGAKI');
+
+  If you don't like this interface, just use specific authors list.
+
+    use Acme::CPANAuthors::Japanese;
+
+    my %authors = Acme::CPANAuthors::Japanese->authors;
+
+    # note that ->author is context sensitive.
+    # however, you can't write this without dereference
+    # as "keys" checks the type (actually, the number) of args.
+    for my $name (keys %{ Acme::CPANAuthors::Japanese->authors }) {
+      print Acme::CPANAuthors::Japanese->authors->{$name}, "\n";
+    }
 
 =head1 DESCRIPTION
 

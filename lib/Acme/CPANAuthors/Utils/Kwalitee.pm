@@ -62,6 +62,26 @@ Acme::CPANAuthors::Utils::Kwalitee
 
     my $info = Acme::CPANAuthors::Utils::Kwalitee->fetch('ISHIGAKI');
 
+    # then, $info will have keys/values like this
+    # (though this may change without notices)
+
+    {
+      info => {
+        Average_Kwalitee => "144.333",
+        CPANTS_Game_Kwalitee => "98.833",
+        Email => "ishigaki\@cpan.org",
+        Liga => "5 or more",
+        Rank => 47,
+      },
+      distributions => {
+        "Acme-CPANAuthors" => {
+          details  => { "use_strict" => "ok", ... },
+          kwalitee => "144.000",
+        },
+        ...
+      },
+    }
+
 =head1 DESCRIPTION
 
 This is mainly to create some local kwalitee rankings for you :)
