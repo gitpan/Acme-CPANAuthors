@@ -21,5 +21,11 @@ ok scalar @names;
 my $name = $authors->name('ISHIGAKI');
 ok $name =~ /Ishigaki/i;
 
-my $avatar_url = $authors->avatar_url('ISHIGAKI');
-ok $avatar_url;
+SKIP: {
+  require Parse::CPAN::Authors;
+  if ( $Parse::CPAN::Authors::VERSION == 2.26 ) {
+    skip ' Parse::CPAN::Authors 2.26 breaks this test', 1;
+  }
+  my $avatar_url = $authors->avatar_url('ISHIGAKI');
+  ok $avatar_url;
+}

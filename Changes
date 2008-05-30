@@ -1,7 +1,11 @@
 Revision history for Acme-CPANAuthors
 
+0.03 2008/05/30
+  - "What's actually broken is Parse::CPAN::Authors 2.26" release
+  - tentatively skip a test if Parse::CPAN::Authors 2.26 is loaded.
+
 0.02 2008/05/22
-  - YAPC::Asia 2008 hackathon release
+  - "YAPC::Asia 2008 hackathon" release
   - made Acme::CPANAuthors::(Specific)->authors context sensitive.
   - better cpan config loading
 
