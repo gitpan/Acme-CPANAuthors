@@ -48,6 +48,17 @@ sub _cpan_file {
   my $source_dir = $CPAN::Config->{keep_source_where};
   my $file = _catfile( $source_dir, '/', $dir, '/', $basename );
   unless ( -f $file ) {
+    require URI::file;
+    foreach my $url ( @{ $CPAN::Config->{urllist} || [] } ) {
+      next unless $url =~ s{^file://}{/};
+      $file = URI::file->new(join '/', $url, $dir, $basename )->file;
+      last if -f $file;
+    }
+  }
+  unless ( -f $file ) {
+    $file = _catfile( $source_dir, '/', $dir, '/', "$basename.bak" );
+  }
+  unless ( -f $file ) {
     $file = _catfile( $source_dir, '/', $basename );
   }
   croak "$file not found" unless -f $file;

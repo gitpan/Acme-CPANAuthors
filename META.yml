@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                Acme-CPANAuthors
-version:             0.03
+version:             0.04
 abstract:            We are CPAN authors
 license:             perl
 author:              
@@ -14,7 +14,7 @@ requires:
     File::Spec:                    0
     Gravatar::URL:                 0
     Module::Find:                  0
-    Parse::CPAN::Authors:          0
+    Parse::CPAN::Authors:          2.27
     Parse::CPAN::Packages:         2.27
     Test::More:                    0.47
     Test::UseAllModules:           0.09

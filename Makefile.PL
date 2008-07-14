@@ -14,7 +14,7 @@ WriteMakefile(
     'File::Spec'             => 0,
     'Gravatar::URL'          => 0,
     'Module::Find'           => 0,
-    'Parse::CPAN::Authors'   => 0,  # should be '2.27' in the future
+    'Parse::CPAN::Authors'   => '2.27',
     'Parse::CPAN::Packages'  => '2.27',
     'Test::More'             => '0.47',
     'Test::UseAllModules'    => '0.09',
