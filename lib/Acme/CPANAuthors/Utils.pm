@@ -41,27 +41,44 @@ sub _cpan_packages_file () {
 sub _cpan_file {
   my ($dir, $basename) = @_;
 
-  _require_myconfig_or_config();
-  croak "You might want to configure CPAN first."
-    unless $CPAN::Config && ref $CPAN::Config eq 'HASH';
+  my $file;
 
-  my $source_dir = $CPAN::Config->{keep_source_where};
-  my $file = _catfile( $source_dir, '/', $dir, '/', $basename );
-  unless ( -f $file ) {
-    require URI::file;
-    foreach my $url ( @{ $CPAN::Config->{urllist} || [] } ) {
-      next unless $url =~ s{^file://}{/};
-      $file = URI::file->new(join '/', $url, $dir, $basename )->file;
-      last if -f $file;
+  # see if CPAN is configured
+  _require_myconfig_or_config();
+  if ( $CPAN::Config && ref $CPAN::Config eq 'HASH' ) {
+    my $source_dir = $CPAN::Config->{keep_source_where};
+    $file = _catfile( $source_dir, $dir, $basename );
+    unless ( -f $file ) {
+      require URI::file;
+      foreach my $url ( @{ $CPAN::Config->{urllist} || [] } ) {
+        next unless $url =~ s{^file://}{/};
+        $file = URI::file->new(join '/', $url, $dir, $basename )->file;
+        last if -f $file;
+      }
+    }
+    unless ( -f $file ) {
+      $file = _catfile( $source_dir, $dir, "$basename.bak" );
+    }
+    unless ( -f $file ) {
+      $file = _catfile( $source_dir, $basename );
     }
   }
-  unless ( -f $file ) {
-    $file = _catfile( $source_dir, '/', $dir, '/', "$basename.bak" );
+
+  # see if CPANPLUS is configured
+  eval { require CPANPLUS::Configure };
+  unless ($@) {
+    # XXX: should also support custom-sources directory?
+    my $source_dir = CPANPLUS::Configure->new->get_conf('base');
+    my $cpanplus_file = _catfile( $source_dir, $basename );
+    if ( -f $cpanplus_file ) {
+      $file ||= $cpanplus_file;
+      if ( (stat($file))[9] < (stat($cpanplus_file))[9] ) {
+        $file = $cpanplus_file;
+      }
+    }
   }
-  unless ( -f $file ) {
-    $file = _catfile( $source_dir, '/', $basename );
-  }
-  croak "$file not found" unless -f $file;
+
+  croak "$file not found; You might want to configure CPAN first." unless -f $file;
 
   return $file;
 }

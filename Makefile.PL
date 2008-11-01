@@ -9,7 +9,6 @@ WriteMakefile(
   ABSTRACT_FROM  => 'lib/Acme/CPANAuthors.pm',
   PREREQ_PM => {
     'Carp'                   => 0,
-    'CPAN::Config'           => 0,
     'Exporter'               => 0,
     'File::Spec'             => 0,
     'Gravatar::URL'          => 0,

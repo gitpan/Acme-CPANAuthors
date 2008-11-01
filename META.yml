@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Acme-CPANAuthors
-version:            0.05
+version:            0.06
 abstract:           We are CPAN authors
 author:
     - Kenichi Ishigaki <ishigaki@cpan.org>
@@ -10,7 +10,6 @@ configure_requires:
     ExtUtils::MakeMaker:  0
 requires:
     Carp:                 0
-    CPAN::Config:         0
     Exporter:             0
     File::Spec:           0
     Gravatar::URL:        0
