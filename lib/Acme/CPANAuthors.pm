@@ -5,29 +5,16 @@ use warnings;
 use Carp;
 use Acme::CPANAuthors::Utils qw( cpan_authors cpan_packages );
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 sub new {
-  my ($class, @types) = @_;
+  my ($class, @categories) = @_;
 
-  unless ( @types ) {
-    require Module::Find;
-    @types = Module::Find::findsubmod( 'Acme::CPANAuthors' );
-  }
+  @categories = _list_categories() unless @categories;
 
   my %authors;
-  foreach my $type ( @types ) {
-    $type =~ s/^Acme::CPANAuthors:://;
-
-    next if $type =~ /^(?:Register|Utils)$/;
-
-    my $package = "Acme::CPANAuthors\::$type";
-    eval "require $package";
-    if ( $@ ) {
-      carp "$type CPAN Authors are not registered yet: $@";
-      next;
-    }
-    %authors = ( %authors, $package->authors );
+  foreach my $category ( @categories ) {
+    %authors = ( %authors, _get_authors_of($category) );
   }
   bless \%authors, $class;
 }
@@ -110,6 +97,53 @@ sub kwalitee {
   return  Acme::CPANAuthors::Utils::Kwalitee->fetch($id);
 }
 
+sub look_for {
+  my ($self, $id_or_name) = @_;
+
+  return unless defined $id_or_name;
+  unless (ref $id_or_name eq 'Regexp') {
+    $id_or_name = qr/$id_or_name/i;
+  }
+
+  my @found;
+  foreach my $category ( _list_categories() ) {
+    my %authors = _get_authors_of($category);
+    while ( my ($id, $name) = each %authors ) {
+      if ($id =~ /$id_or_name/ or $name =~ /$id_or_name/) {
+        push @found, {
+          id       => $id,
+          name     => $name,
+          category => $category,
+        };
+      }
+    }
+  }
+  return @found;
+}
+
+sub _list_categories {
+  require Module::Find;
+  return grep { $_ !~ /^(?:Register|Utils|Not)$/ }
+         map  { s/^Acme::CPANAuthors:://; $_ }
+         Module::Find::findsubmod( 'Acme::CPANAuthors' );
+}
+
+sub _get_authors_of {
+  my $category = shift;
+
+  $category =~ s/^Acme::CPANAuthors:://;
+
+  return if $category =~ /^(?:Register|Utils)$/;
+
+  my $package = "Acme::CPANAuthors\::$category";
+  eval "require $package";
+  if ( $@ ) {
+    carp "$category CPAN Authors are not registered yet: $@";
+    return;
+  }
+  $package->authors;
+}
+
 1;
 
 __END__
@@ -124,11 +158,12 @@ Acme::CPANAuthors - We are CPAN authors
 
     my $authors = Acme::CPANAuthors->new('Japanese');
 
-    $number   = $authors->count;
-    @ids      = $authors->id;
-    @distros  = $authors->distributions('ISHIGAKI');
-    $url      = $authors->avatar_url('ISHIGAKI');
-    $kwalitee = $authors->kwalitee('ISHIGAKI');
+    my $number   = $authors->count;
+    my @ids      = $authors->id;
+    my @distros  = $authors->distributions('ISHIGAKI');
+    my $url      = $authors->avatar_url('ISHIGAKI');
+    my $kwalitee = $authors->kwalitee('ISHIGAKI');
+    my @info     = $authors->look_for('ishigaki');
 
   If you don't like this interface, just use specific authors list.
 
@@ -188,13 +223,73 @@ see L<http://site.gravatar.com/site/implement> for details.
 returns kwalitee information for the author of the id.
 This information is scraped from http://kwalitee.perl.org/.
 
+=head2 look_for
+
+  my @authors = Acme::CPANAuthors->look_for('SOMEONE');
+  foreach my $author (@authors) {
+    printf "%s (%s) belongs to %s.\n",
+      $author->{id}, $author->{name}, $author->{category};
+  }
+
+takes an id or a name (or a part of them, or even an regexp)
+and returns an array of hash references, each of which contains
+an id, a name, and a basename of the class where the person is
+registered. Note that this will load all the installed
+Acme::CPANAuthors:: modules but L<Acme::CPANAuthors::Not> and
+modules with deeper namespaces.
+
+=head1 SEE ALSO
+
+As of writing this, there're more than a dozen of lists on the CPAN,
+including:
+
+=over 4
+
+=item L<Acme::CPANAuthors::Austrian>
+
+=item L<Acme::CPANAuthors::Brazilian>
+
+=item L<Acme::CPANAuthors::Canadian>
+
+=item L<Acme::CPANAuthors::Chinese>
+
+=item L<Acme::CPANAuthors::CodeRepos>
+
+=item L<Acme::CPANAuthors::French>
+
+=item L<Acme::CPANAuthors::GeekHouse>
+
+=item L<Acme::CPANAuthors::Icelandic>
+
+=item L<Acme::CPANAuthors::Israeli>
+
+=item L<Acme::CPANAuthors::Italian>
+
+=item L<Acme::CPANAuthors::Japanese>
+
+=item L<Acme::CPANAuthors::Misanthrope>
+
+=item L<Acme::CPANAuthors::Not>
+
+=item L<Acme::CPANAuthors::Russian>
+
+=item L<Acme::CPANAuthors::Taiwanese>
+
+=item L<Acme::CPANAuthors::You::re_using>
+
+=item L<Acme::CPANAuthors::Acme::CPANAuthors::Authors>
+
+=back
+
+Thank you all. And I hope more to come.
+
 =head1 AUTHOR
 
 Kenichi Ishigaki, E<lt>ishigaki at cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2007 by Kenichi Ishigaki.
+Copyright (C) 2007-2009 by Kenichi Ishigaki.
 
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
