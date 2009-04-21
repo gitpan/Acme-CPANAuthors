@@ -1,5 +1,9 @@
 Revision history for Acme-CPANAuthors
 
+0.08 2009/04/21
+  - added more lists to the pod
+  - added $VERSION to the ::Utils not to break installers (RT #43388)
+
 0.07 2009/02/19
   - added 'look_for' method and its test
   - added a list of Acme::CPANAuthors:: modules to the pod

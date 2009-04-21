@@ -5,7 +5,7 @@ use warnings;
 use Carp;
 use Acme::CPANAuthors::Utils qw( cpan_authors cpan_packages );
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 sub new {
   my ($class, @categories) = @_;
@@ -83,7 +83,7 @@ sub avatar_url {
   return unless $id;
 
   require Gravatar::URL;
-  my $author = cpan_authors->author($id);
+  my $author = cpan_authors->author($id) or return;
 
   return Gravatar::URL::gravatar_url( email => $author->email, %options );
 }
@@ -165,7 +165,7 @@ Acme::CPANAuthors - We are CPAN authors
     my $kwalitee = $authors->kwalitee('ISHIGAKI');
     my @info     = $authors->look_for('ishigaki');
 
-  If you don't like this interface, just use specific authors list.
+  If you don't like this interface, just use a specific authors list.
 
     use Acme::CPANAuthors::Japanese;
 
@@ -269,11 +269,19 @@ including:
 
 =item L<Acme::CPANAuthors::Misanthrope>
 
+=item L<Acme::CPANAuthors::Norwegian>
+
 =item L<Acme::CPANAuthors::Not>
+
+=item L<Acme::CPANAuthors::Portuguese>
 
 =item L<Acme::CPANAuthors::Russian>
 
 =item L<Acme::CPANAuthors::Taiwanese>
+
+=item L<Acme::CPANAuthors::Turkish>
+
+=item L<Acme::CPANAuthors::Ukrainian>
 
 =item L<Acme::CPANAuthors::You::re_using>
 
