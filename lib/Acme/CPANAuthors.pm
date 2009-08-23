@@ -5,7 +5,7 @@ use warnings;
 use Carp;
 use Acme::CPANAuthors::Utils qw( cpan_authors cpan_packages );
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 sub new {
   my ($class, @categories) = @_;
@@ -185,6 +185,19 @@ alone, or to see if we're doing right things, or to look for
 someone we can rely on. This module provides you some basic
 information on us.
 
+=head1 WHY THIS MODULE?
+
+We've been holding a Kwalitee competition for Japanese CPAN Authors
+since 2006. Though Japanese names are rather easy to distinguish
+from westerner's names (as our names have lots of vowels), it's
+tedious to look for Japanese authors every time we hold the contest.
+That's why I wrote this module and started maintaining the Japanese
+authors list with a script to look for candidates whose name looks
+like Japanese by the help of L<Lingua::JA::Romaji::Valid> I coined.
+
+Since then, dozens of lists are uploaded on CPAN. It may be time
+to start other games, like offering more useful statistics online.
+
 =head1 METHODS
 
 =head2 new
@@ -231,7 +244,7 @@ This information is scraped from http://kwalitee.perl.org/.
       $author->{id}, $author->{name}, $author->{category};
   }
 
-takes an id or a name (or a part of them, or even an regexp)
+takes an id or a name (or a part of them, or even a regexp)
 and returns an array of hash references, each of which contains
 an id, a name, and a basename of the class where the person is
 registered. Note that this will load all the installed
@@ -245,6 +258,8 @@ including:
 
 =over 4
 
+=item L<Acme::CPANAuthors::Arabic>
+
 =item L<Acme::CPANAuthors::Austrian>
 
 =item L<Acme::CPANAuthors::Brazilian>
@@ -253,11 +268,9 @@ including:
 
 =item L<Acme::CPANAuthors::Chinese>
 
-=item L<Acme::CPANAuthors::CodeRepos>
-
 =item L<Acme::CPANAuthors::French>
 
-=item L<Acme::CPANAuthors::GeekHouse>
+=item L<Acme::CPANAuthors::German>
 
 =item L<Acme::CPANAuthors::Icelandic>
 
@@ -267,11 +280,7 @@ including:
 
 =item L<Acme::CPANAuthors::Japanese>
 
-=item L<Acme::CPANAuthors::Misanthrope>
-
 =item L<Acme::CPANAuthors::Norwegian>
-
-=item L<Acme::CPANAuthors::Not>
 
 =item L<Acme::CPANAuthors::Portuguese>
 
@@ -283,9 +292,39 @@ including:
 
 =item L<Acme::CPANAuthors::Ukrainian>
 
-=item L<Acme::CPANAuthors::You::re_using>
+=back
+
+These are not regional ones but for some local groups.
+
+=over 4
+
+=item L<Acme::CPANAuthors::CodeRepos>
+
+=item L<Acme::CPANAuthors::GeekHouse>
+
+=back
+
+These are lists for specific module authors.
+
+=over 4
+
+=item L<Acme::CPANAuthors::AnyEvent>
+
+=item L<Acme::CPANAuthors::POE>
 
 =item L<Acme::CPANAuthors::Acme::CPANAuthors::Authors>
+
+=back
+
+And other stuff.
+
+=over 4
+
+=item L<Acme::CPANAuthors::Misanthrope>
+
+=item L<Acme::CPANAuthors::Not>
+
+=item L<Acme::CPANAuthors::You::re_using>
 
 =back
 

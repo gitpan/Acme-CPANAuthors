@@ -1,5 +1,11 @@
 Revision history for Acme-CPANAuthors
 
+0.09 2009/08/23
+  - added Arabic and German to the subordinate modules list,
+    and rearranged the list a bit.
+  - added a reason why I wrote this
+  - added a tentative workaround to t/03_extra.t. hope this works...
+
 0.08 2009/04/21
   - added more lists to the pod
   - added $VERSION to the ::Utils not to break installers (RT #43388)

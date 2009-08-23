@@ -5,12 +5,18 @@ use Test::More;
 use Acme::CPANAuthors;
 use Parse::CPAN::Authors;
 
-if ( $Parse::CPAN::Authors::VERSION == 2.26 ) {
-  plan skip_all => 'Parse::CPAN::Authors 2.26 breaks this test';
-}
+BEGIN {
+  if ( $Parse::CPAN::Authors::VERSION == 2.26 ) {
+    plan skip_all => 'Parse::CPAN::Authors 2.26 breaks this test';
+  }
 
-eval { Acme::CPANAuthors::Utils::_cpan_authors_file() };
-plan skip_all => $@ if $@;
+  local $@;
+  eval { Acme::CPANAuthors::Utils::_cpan_authors_file() };
+  if ($@) {
+    plan skip_all => $@;
+    exit;
+  }
+}
 
 plan 'no_plan';
 
