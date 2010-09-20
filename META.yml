@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Acme-CPANAuthors
-version:            0.09
+version:            0.10
 abstract:           We are CPAN authors
 author:
     - Kenichi Ishigaki <ishigaki@cpan.org>
@@ -20,13 +20,14 @@ requires:
     Parse::CPAN::Packages:  2.27
     Test::More:           0.47
     Test::UseAllModules:  0.09
+    Try::Tiny:            0
     URI:                  0
     Web::Scraper:         0.21
 no_index:
     directory:
         - t
         - inc
-generated_by:       ExtUtils::MakeMaker version 6.52
+generated_by:       ExtUtils::MakeMaker version 6.56
 meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
     version:  1.4

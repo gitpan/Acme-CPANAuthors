@@ -5,7 +5,7 @@ use warnings;
 use Carp;
 use Acme::CPANAuthors::Utils qw( cpan_authors cpan_packages );
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 sub new {
   my ($class, @categories) = @_;
@@ -189,7 +189,7 @@ information on us.
 
 We've been holding a Kwalitee competition for Japanese CPAN Authors
 since 2006. Though Japanese names are rather easy to distinguish
-from westerner's names (as our names have lots of vowels), it's
+from Westerner's names (as our names have lots of vowels), it's
 tedious to look for Japanese authors every time we hold the contest.
 That's why I wrote this module and started maintaining the Japanese
 authors list with a script to look for candidates whose name looks
@@ -205,7 +205,7 @@ to start other games, like offering more useful statistics online.
 creates an object and loads the subclasses you specified.
 If you don't specify any subclasses, it tries to load all
 the subclasses found just under the "Acme::CPANAuthors"
-namespace.
+namespace (except L<Acme::CPANAuthors::Not>).
 
 =head2 count
 
@@ -268,17 +268,23 @@ including:
 
 =item L<Acme::CPANAuthors::Chinese>
 
+=item L<Acme::CPANAuthors::Dutch>
+
 =item L<Acme::CPANAuthors::French>
 
 =item L<Acme::CPANAuthors::German>
 
 =item L<Acme::CPANAuthors::Icelandic>
 
+=item L<Acme::CPANAuthors::Indonesian>
+
 =item L<Acme::CPANAuthors::Israeli>
 
 =item L<Acme::CPANAuthors::Italian>
 
 =item L<Acme::CPANAuthors::Japanese>
+
+=item L<Acme::CPANAuthors::Korean>
 
 =item L<Acme::CPANAuthors::Norwegian>
 
@@ -297,6 +303,10 @@ including:
 These are not regional ones but for some local groups.
 
 =over 4
+
+=item L<Acme::CPANAuthors::Booking>
+
+=item L<Acme::CPANAuthors::British::Companies>
 
 =item L<Acme::CPANAuthors::CodeRepos>
 
@@ -320,9 +330,15 @@ And other stuff.
 
 =over 4
 
+=item L<Acme::CPANAuthors::CPANTS::FiveOrMore>
+
+=item L<Acme::CPANAuthors::Female>
+
 =item L<Acme::CPANAuthors::Misanthrope>
 
 =item L<Acme::CPANAuthors::Not>
+
+=item L<Acme::CPANAuthors::Pumpkings>
 
 =item L<Acme::CPANAuthors::You::re_using>
 
@@ -336,7 +352,7 @@ Kenichi Ishigaki, E<lt>ishigaki at cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2007-2009 by Kenichi Ishigaki.
+Copyright (C) 2007-2010 by Kenichi Ishigaki.
 
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
