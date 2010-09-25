@@ -6,7 +6,7 @@ use Carp;
 use base qw( Exporter );
 use File::Spec;
 
-our $VERSION   = '0.11'; # see RT #43388
+our $VERSION   = '0.12'; # see RT #43388
 our @EXPORT_OK = qw( cpan_authors cpan_packages );
 
 my $CPANFiles = {};
@@ -15,18 +15,18 @@ sub clear_cached_cpan_files () { $CPANFiles = {}; }
 
 sub cpan_authors () {
   unless ( $CPANFiles->{authors} ) {
-    require Parse::CPAN::Authors;
+    require Acme::CPANAuthors::Utils::Authors;
     $CPANFiles->{authors} =
-      Parse::CPAN::Authors->new( _cpan_authors_file() );
+      Acme::CPANAuthors::Utils::Authors->new( _cpan_authors_file() );
   }
   return $CPANFiles->{authors};
 }
 
 sub cpan_packages () {
   unless ( $CPANFiles->{packages} ) {
-    require Parse::CPAN::Packages;
+    require Acme::CPANAuthors::Utils::Packages;
     $CPANFiles->{packages} =
-      Parse::CPAN::Packages->new( _cpan_packages_file() );
+      Acme::CPANAuthors::Utils::Packages->new( _cpan_packages_file() );
   }
   return $CPANFiles->{packages};
 }

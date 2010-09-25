@@ -5,7 +5,7 @@ use warnings;
 use Carp;
 use Acme::CPANAuthors::Utils qw( cpan_authors cpan_packages );
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 sub new {
   my ($class, @categories) = @_;
@@ -321,6 +321,8 @@ These are lists for specific module authors.
 =item L<Acme::CPANAuthors::AnyEvent>
 
 =item L<Acme::CPANAuthors::POE>
+
+=item L<Acme::CPANAuthors::ToBeLike>
 
 =item L<Acme::CPANAuthors::Acme::CPANAuthors::Authors>
 
