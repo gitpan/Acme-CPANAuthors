@@ -22,14 +22,25 @@ sub fetch {
   return unless $id;
 
   my $res = $class->_ua->get(_uri(lc $id));
-  return unless $res->is_success;
+  unless ($res->is_success && $res->code == 200) {
+    $class->_error($res->status_line);
+  }
 
   my $json = eval { JSON::decode_json($res->content) };
   if ($@) {
-    warn $@;
-    return;
+    $class->_error($@);
   }
   return $json;
+}
+
+sub _error {
+  my ($class, $error) = @_;
+
+  die "API SERVER ERROR\n"
+    . "Couldn't parse kwalitee info from the api server\n"
+    . "  $error\n"
+    . "Sorry for the inconvenience. If this lingers long,\n"
+    . "please drop a line to <ishigaki\@cpan.org>.\n";
 }
 
 1;

@@ -4,8 +4,11 @@ use lib 't/lib';
 use Test::More qw(no_plan);
 use Acme::CPANAuthors;
 
-{
-  my $kwalitee = Acme::CPANAuthors->kwalitee('ISHIGAKI');
+SKIP: {
+  my $kwalitee = eval { Acme::CPANAuthors->kwalitee('ISHIGAKI') };
+  if ($@) {
+    skip "API server seems down; sorry for the inconvenience", 3;
+  }
   ok ref $kwalitee eq 'HASH' && %$kwalitee;
   ok $kwalitee->{info},          "has info";
   ok $kwalitee->{distributions}, "has distributions";
