@@ -5,7 +5,7 @@ use warnings;
 use Carp;
 use Acme::CPANAuthors::Utils qw( cpan_authors cpan_packages );
 
-our $VERSION = '0.15';
+our $VERSION = '0.16';
 
 sub new {
   my ($class, @categories) = @_;
@@ -123,7 +123,7 @@ sub look_for {
 
 sub _list_categories {
   require Module::Find;
-  return grep { $_ !~ /^(?:Register|Utils|Not)$/ }
+  return grep { $_ !~ /^(?:Register|Utils|Not|Search)$/ }
          map  { s/^Acme::CPANAuthors:://; $_ }
          Module::Find::findsubmod( 'Acme::CPANAuthors' );
 }
@@ -133,7 +133,7 @@ sub _get_authors_of {
 
   $category =~ s/^Acme::CPANAuthors:://;
 
-  return if $category =~ /^(?:Register|Utils)$/;
+  return if $category =~ /^(?:Register|Utils|Search)$/;
 
   my $package = "Acme::CPANAuthors\::$category";
   eval "require $package";
@@ -324,6 +324,8 @@ These are not regional ones but for some local groups.
 
 =item L<Acme::CPANAuthors::GeekHouse>
 
+=item L<Acme::CPANAuthors::GitHub>
+
 =back
 
 These are lists for specific module authors.
@@ -331,6 +333,8 @@ These are lists for specific module authors.
 =over 4
 
 =item L<Acme::CPANAuthors::AnyEvent>
+
+=item L<Acme::CPANAuthors::DualLife>
 
 =item L<Acme::CPANAuthors::POE>
 
@@ -353,6 +357,8 @@ And other stuff.
 =item L<Acme::CPANAuthors::Not>
 
 =item L<Acme::CPANAuthors::Pumpkings>
+
+=item L<Acme::CPANAuthors::Search> (now L<CPAN::AuthorsSearch>)
 
 =item L<Acme::CPANAuthors::You::re_using>
 
