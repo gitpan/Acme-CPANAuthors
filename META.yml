@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Acme-CPANAuthors
-version:            0.17
+version:            0.18
 abstract:           We are CPAN authors
 author:
     - Kenichi Ishigaki <ishigaki@cpan.org>
