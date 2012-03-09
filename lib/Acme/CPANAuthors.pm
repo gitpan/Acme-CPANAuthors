@@ -5,7 +5,7 @@ use warnings;
 use Carp;
 use Acme::CPANAuthors::Utils qw( cpan_authors cpan_packages );
 
-our $VERSION = '0.18';
+our $VERSION = '0.19';
 
 sub new {
   my ($class, @categories) = @_;
@@ -285,6 +285,8 @@ including:
 
 =item L<Acme::CPANAuthors::Canadian>
 
+=item L<Acme::CPANAuthors::Catalonian>
+
 =item L<Acme::CPANAuthors::Chinese>
 
 =item L<Acme::CPANAuthors::Danish>
@@ -391,7 +393,7 @@ Kenichi Ishigaki, E<lt>ishigaki at cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2007-2011 by Kenichi Ishigaki.
+Copyright (C) 2007-2012 by Kenichi Ishigaki.
 
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
