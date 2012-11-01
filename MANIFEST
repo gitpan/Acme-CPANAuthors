@@ -25,4 +25,5 @@ t/data/modules/02packages.details.txt
 t/data/modules/02packages.details.txt.gz
 t/lib/Acme/CPANAuthors/Test.pm
 t/lib/Acme/CPANAuthors/TestExtra.pm
-META.yml                                 Module meta-data (added by MakeMaker)
+META.yml                                 Module YAML meta-data (added by MakeMaker)
+META.json                                Module JSON meta-data (added by MakeMaker)
