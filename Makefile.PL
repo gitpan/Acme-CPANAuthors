@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
-WriteMakefile(
+my %params = (
   NAME           => 'Acme::CPANAuthors',
   AUTHOR         => 'Kenichi Ishigaki <ishigaki@cpan.org>',
   VERSION_FROM   => 'lib/Acme/CPANAuthors.pm',
@@ -24,8 +24,19 @@ WriteMakefile(
     'Try::Tiny'              => 0,
     'version'                => '0.74',  # core in 5.10
   },
-  ($ExtUtils::MakeMaker::VERSION >= 6.31
-    ? (LICENSE => 'perl')
-    : ()
-  ),
+  META_MERGE => {
+    recommends => {
+      'Gravatar::URL' => 0,
+    },
+    resources => {
+      repository  => 'https://github.com/charsbar/acme-cpanauthors',
+    },
+  },
+  LICENSE => 'perl',
 );
+
+my $eumm = $ExtUtils::MakeMaker::VERSION;
+delete $params{LICENSE}    if $eumm < 6.31;
+delete $params{META_MERGE} if $eumm < 6.46;
+
+WriteMakefile(%params);

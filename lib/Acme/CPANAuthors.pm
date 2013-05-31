@@ -5,7 +5,7 @@ use warnings;
 use Carp;
 use Acme::CPANAuthors::Utils qw( cpan_authors cpan_packages );
 
-our $VERSION = '0.20';
+our $VERSION = '0.21';
 
 sub new {
   my ($class, @categories) = @_;
@@ -29,7 +29,8 @@ sub id {
   my ($self, $id) = @_;
 
   unless ( $id ) {
-    return sort keys %{ $self };
+    my @ids = sort keys %{ $self };
+    return @ids;
   }
   else {
     return $self->{$id} ? 1 : 0;
@@ -82,10 +83,22 @@ sub avatar_url {
 
   return unless $id;
 
-  eval {require Gravatar::URL; 1} or return;
+  eval {require Gravatar::URL; 1}
+      or warn($@), return;
   my $author = cpan_authors->author($id) or return;
 
-  return Gravatar::URL::gravatar_url( email => $author->email, %options );
+  my $default = delete $options{default};
+  return Gravatar::URL::gravatar_url(
+    email => $author->email,
+    %options,
+    default => Gravatar::URL::gravatar_url(
+      # Fall back to the CPAN address, as used by metacpan, which will in
+      # turn fall back to a generated image.
+      email => $id . '@cpan.org',
+      %options,
+      $default ? ( default => $default ) : (),
+    ),
+  );
 }
 
 sub kwalitee {
@@ -274,12 +287,14 @@ modules with deeper namespaces.
 
 =head1 SEE ALSO
 
-As of writing this, there're more than a dozen of lists on the CPAN,
+As of writing this, there are quite a number of lists on the CPAN,
 including:
 
 =over 4
 
 =item L<Acme::CPANAuthors::Austrian>
+
+=item L<Acme::CPANAuthors::Belarusian>
 
 =item L<Acme::CPANAuthors::Brazilian>
 
@@ -374,6 +389,8 @@ And other stuff.
 =item L<Acme::CPANAuthors::CPANTS::FiveOrMore>
 
 =item L<Acme::CPANAuthors::Misanthrope>
+
+=item L<Acme::CPANAuthors::Nonhuman>
 
 =item L<Acme::CPANAuthors::Not>
 
