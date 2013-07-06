@@ -5,7 +5,7 @@ use warnings;
 use Carp;
 use Acme::CPANAuthors::Utils qw( cpan_authors cpan_packages );
 
-our $VERSION = '0.21';
+our $VERSION = '0.22';
 
 sub new {
   my ($class, @categories) = @_;
@@ -149,10 +149,12 @@ sub _get_authors_of {
   return if $category =~ /^(?:Register|Utils|Search)$/;
 
   my $package = "Acme::CPANAuthors\::$category";
-  eval "require $package";
-  if ( $@ ) {
-    carp "$category CPAN Authors are not registered yet: $@";
-    return;
+  unless ($package->can('authors')) {
+    eval "require $package";
+    if ( $@ ) {
+      carp "$category CPAN Authors are not registered yet: $@";
+      return;
+    }
   }
   $package->authors;
 }
@@ -291,6 +293,8 @@ As of writing this, there are quite a number of lists on the CPAN,
 including:
 
 =over 4
+
+=item L<Acme::CPANAuthors::Australian>
 
 =item L<Acme::CPANAuthors::Austrian>
 

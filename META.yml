@@ -36,4 +36,4 @@ requires:
   version: 0.74
 resources:
   repository: https://github.com/charsbar/acme-cpanauthors
-version: 0.21
+version: 0.22
