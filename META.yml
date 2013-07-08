@@ -30,10 +30,11 @@ requires:
   JSON: 0
   LWP::UserAgent: 0
   Module::Find: 0
-  Test::More: 0.47
+  Test::Deep: 0
+  Test::More: 0.88
   Test::UseAllModules: 0.09
   Try::Tiny: 0
   version: 0.74
 resources:
   repository: https://github.com/charsbar/acme-cpanauthors
-version: 0.22
+version: 0.23
